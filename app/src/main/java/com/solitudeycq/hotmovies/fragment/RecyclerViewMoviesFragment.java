@@ -1,4 +1,4 @@
-package com.solitudeycq.hotmovies;
+package com.solitudeycq.hotmovies.fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,6 +13,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.solitudeycq.hotmovies.recylerview.PictureAdapter;
+import com.solitudeycq.hotmovies.R;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,8 +23,8 @@ import java.util.List;
  * Created by solitudeycq on 2016/12/9.
  */
 
-public class RecyclerViewFragment extends Fragment {
-    private static final String TAG = "RecyclerViewFragment";
+public class RecyclerViewMoviesFragment extends Fragment {
+    private static final String TAG = "RecyclerViewMoviesFragment";
 
     private RecyclerView mRecyclerView;
     private List<Integer> images = new ArrayList<Integer>();

@@ -1,8 +1,10 @@
-package com.solitudeycq.hotmovies;
+package com.solitudeycq.hotmovies.recylerview;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.solitudeycq.hotmovies.R;
 
 import java.util.List;
 
@@ -17,7 +19,7 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureViewHolder> {
     }
     @Override
     public PictureViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = View.inflate(parent.getContext(),R.layout.list_item_movie,null);
+        View view = View.inflate(parent.getContext(), R.layout.list_item_movie,null);
         return new PictureViewHolder(view);
     }
     @Override

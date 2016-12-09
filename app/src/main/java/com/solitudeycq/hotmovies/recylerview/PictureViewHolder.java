@@ -1,8 +1,10 @@
-package com.solitudeycq.hotmovies;
+package com.solitudeycq.hotmovies.recylerview;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+
+import com.solitudeycq.hotmovies.R;
 
 /**
  * Created by solitudeycq on 2016/12/9.
