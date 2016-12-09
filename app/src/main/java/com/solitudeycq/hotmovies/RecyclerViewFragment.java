@@ -3,6 +3,7 @@ package com.solitudeycq.hotmovies;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,6 +13,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by solitudeycq on 2016/12/9.
  */
@@ -20,10 +24,15 @@ public class RecyclerViewFragment extends Fragment {
     private static final String TAG = "RecyclerViewFragment";
 
     private RecyclerView mRecyclerView;
+    private List<Integer> images = new ArrayList<Integer>();
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+
+        for(int i = 0;i<20;i++) {
+            images.add(R.drawable.default_pic);
+        }
     }
 
     @Nullable
@@ -31,6 +40,10 @@ public class RecyclerViewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_main,container,false);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerview_movies);
+        RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(getActivity(),2);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        PictureAdapter mPictureAdapter = new PictureAdapter(images);
+        mRecyclerView.setAdapter(mPictureAdapter);
         return v;
     }
 
