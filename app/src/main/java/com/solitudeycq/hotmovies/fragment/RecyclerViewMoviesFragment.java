@@ -34,7 +34,7 @@ public class RecyclerViewMoviesFragment extends Fragment {
         setHasOptionsMenu(true);
 
         for(int i = 0;i<20;i++) {
-            images.add(R.drawable.default_pic);
+            images.add(R.drawable.test);
         }
     }
 
