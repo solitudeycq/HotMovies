@@ -43,7 +43,7 @@ public class RecyclerViewMoviesFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_main,container,false);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerview_movies);
-        GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(),2);
+        GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(),3);
         mRecyclerView.setLayoutManager(mLayoutManager);
         PictureAdapter mPictureAdapter = new PictureAdapter(images);
         mRecyclerView.setAdapter(mPictureAdapter);

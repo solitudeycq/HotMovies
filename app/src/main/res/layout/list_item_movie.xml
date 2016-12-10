@@ -2,10 +2,45 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              android:layout_width="wrap_content"
              android:layout_height="wrap_content">
-    <ImageView
-        android:id="@+id/movie_pic"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scaleType="fitCenter"
-        android:adjustViewBounds="true"/>
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/movie_pic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"/>
+        <LinearLayout
+            android:id="@+id/linearlayout"
+            android:layout_below="@id/movie_pic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <RatingBar
+                android:id="@+id/ratingbar"
+                android:layout_below="@id/movie_pic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:rating="4.5"
+                android:numStars="5"
+                android:isIndicator="true"
+                style="?android:attr/ratingBarStyleSmall"
+                />
+            <TextView
+                android:id="@+id/rating_mark"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="4.5"
+                android:layout_marginLeft="15dp"/>
+        </LinearLayout>
+        <TextView
+            android:id="@+id/movie_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/linearlayout"
+            android:text="影片名字"
+            android:layout_centerHorizontal="true"/>
+    </RelativeLayout>
 </FrameLayout>
