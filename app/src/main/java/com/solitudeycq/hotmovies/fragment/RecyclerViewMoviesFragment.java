@@ -24,7 +24,7 @@ import java.util.List;
  */
 
 public class RecyclerViewMoviesFragment extends Fragment {
-    private static final String TAG = "RecyclerViewMoviesFragment";
+    private static final String TAG = "RecyclerViewFragment";
 
     private RecyclerView mRecyclerView;
     private List<Integer> images = new ArrayList<Integer>();
