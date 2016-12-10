@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 
 import com.solitudeycq.hotmovies.recylerview.PictureAdapter;
 import com.solitudeycq.hotmovies.R;
+import com.solitudeycq.hotmovies.recylerview.SpaceItemDecoration;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +35,7 @@ public class RecyclerViewMoviesFragment extends Fragment {
         setHasOptionsMenu(true);
 
         for(int i = 0;i<20;i++) {
-            images.add(R.drawable.test);
+            images.add(R.drawable.default_pic);
         }
     }
 
@@ -45,6 +46,7 @@ public class RecyclerViewMoviesFragment extends Fragment {
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerview_movies);
         GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(),3);
         mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecyclerView.addItemDecoration(new SpaceItemDecoration(15));
         PictureAdapter mPictureAdapter = new PictureAdapter(images);
         mRecyclerView.setAdapter(mPictureAdapter);
         return v;
