@@ -1,13 +1,13 @@
 package com.solitudeycq.hotmovies.recylerview;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.solitudeycq.hotmovies.R;
 import com.solitudeycq.hotmovies.bean.Movie;
+import com.solitudeycq.hotmovies.utils.LogControl;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -46,7 +46,7 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureViewHolder> {
                     .into(holder.mImageView, new Callback() {
                         @Override
                         public void onSuccess() {
-                            Log.d(TAG, "加载成功！");
+                            LogControl.d(TAG, "加载成功！");
                         }
 
                         @Override

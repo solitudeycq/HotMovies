@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,6 +21,7 @@ import com.solitudeycq.hotmovies.recylerview.OnItemClickLitener;
 import com.solitudeycq.hotmovies.recylerview.PictureAdapter;
 import com.solitudeycq.hotmovies.recylerview.SpaceItemDecoration;
 import com.solitudeycq.hotmovies.utils.Constants;
+import com.solitudeycq.hotmovies.utils.LogControl;
 import com.solitudeycq.hotmovies.utils.ParseJSON;
 
 import java.io.BufferedReader;
@@ -85,11 +85,11 @@ public class RecyclerViewMoviesFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_refresh) {
-            Log.d(TAG, "刷新");
+            LogControl.d(TAG, "刷新");
             return true;
         }
         if (id == R.id.action_settings) {
-            Log.d(TAG, "设置");
+            LogControl.d(TAG, "设置");
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -105,7 +105,7 @@ public class RecyclerViewMoviesFragment extends Fragment {
             BufferedReader reader = null;
             try {
                 URL url = new URL(Constants.GET_MOVIES_BY_POPULAR + BuildConfig.THEME_MOVIE_DB_API_KEY);
-                Log.d(TAG, "URL:" + url.toString());
+                LogControl.d(TAG, "URL:" + url.toString());
                 urlConnection = (HttpURLConnection) url.openConnection();
                 urlConnection.setRequestMethod("GET");
                 urlConnection.connect();
@@ -138,7 +138,7 @@ public class RecyclerViewMoviesFragment extends Fragment {
                     try {
                         reader.close();
                     } catch (final IOException e) {
-                        Log.e(TAG, "Error closing stream", e);
+                        LogControl.e(TAG, "Error closing stream"+e.toString());
                     }
                 }
             }
