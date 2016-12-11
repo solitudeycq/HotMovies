@@ -14,7 +14,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:scaleType="fitCenter"
-                android:adjustViewBounds="true"/>
+                android:adjustViewBounds="true"
+                android:src="@drawable/default_pic"/>
             <LinearLayout
                 android:id="@+id/linearlayout"
                 android:layout_below="@id/movie_pic"

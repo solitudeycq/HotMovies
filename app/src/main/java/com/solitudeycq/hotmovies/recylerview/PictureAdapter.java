@@ -5,6 +5,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.solitudeycq.hotmovies.R;
+import com.solitudeycq.hotmovies.bean.Movie;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -14,8 +16,8 @@ import java.util.List;
 
 public class PictureAdapter extends RecyclerView.Adapter<PictureViewHolder> {
     private OnItemClickLitener mOnItemClickLitener;
-    List<Integer> images;
-    public PictureAdapter(List<Integer> resources){
+    List<Movie> images;
+    public PictureAdapter(List<Movie> resources){
         images = resources;
     }
     //设置监听事件
@@ -30,7 +32,18 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureViewHolder> {
     }
     @Override
     public void onBindViewHolder(final PictureViewHolder holder, int position) {
-        holder.mImageView.setImageResource(images.get(position).intValue());
+        if(images.size()==0){
+            holder.mImageView.setImageResource(R.drawable.default_pic);
+        }else{
+            Picasso.with(holder.itemView.getContext())
+                    .load(images.get(position).getPicture())
+                    .placeholder(R.drawable.default_pic)
+                    .into(holder.mImageView);
+            holder.mMovieName.setText(images.get(position).getName());
+            holder.mRating.setText(images.get(position).getRating());
+            holder.mRatingBar.setRating((Float.parseFloat(images.get(position).getRating()))/2.0f);
+        }
+
         if(mOnItemClickLitener!=null){
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
