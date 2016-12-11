@@ -1,14 +1,19 @@
 package com.solitudeycq.hotmovies.recylerview;
 
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.solitudeycq.hotmovies.R;
 import com.solitudeycq.hotmovies.bean.Movie;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by solitudeycq on 2016/12/9.
@@ -38,7 +43,17 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureViewHolder> {
             Picasso.with(holder.itemView.getContext())
                     .load(images.get(position).getPicture())
                     .placeholder(R.drawable.default_pic)
-                    .into(holder.mImageView);
+                    .into(holder.mImageView, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            Log.d(TAG, "加载成功！");
+                        }
+
+                        @Override
+                        public void onError() {
+                            Toast.makeText(holder.itemView.getContext(),"图片加载失败，使用默认图片代替",Toast.LENGTH_SHORT).show();
+                        }
+                    });
             holder.mMovieName.setText(images.get(position).getName());
             holder.mRating.setText(images.get(position).getRating());
             holder.mRatingBar.setRating((Float.parseFloat(images.get(position).getRating()))/2.0f);
