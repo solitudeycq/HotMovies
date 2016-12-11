@@ -12,7 +12,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.solitudeycq.hotmovies.recylerview.OnItemClickLitener;
 import com.solitudeycq.hotmovies.recylerview.PictureAdapter;
 import com.solitudeycq.hotmovies.R;
 import com.solitudeycq.hotmovies.recylerview.SpaceItemDecoration;
@@ -48,6 +50,12 @@ public class RecyclerViewMoviesFragment extends Fragment {
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.addItemDecoration(new SpaceItemDecoration(15));
         PictureAdapter mPictureAdapter = new PictureAdapter(images);
+        mPictureAdapter.setOnItemClickLitener(new OnItemClickLitener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                Toast.makeText(getActivity(),(position+1)+"",Toast.LENGTH_SHORT).show();
+            }
+        });
         mRecyclerView.setAdapter(mPictureAdapter);
         return v;
     }
