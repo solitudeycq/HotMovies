@@ -13,7 +13,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.solitudeycq.hotmovies.R;
@@ -41,7 +40,6 @@ public class RecyclerViewMoviesFragment extends Fragment {
     private List<Movie> images = new ArrayList<>();
     private PictureAdapter mPictureAdapter;
     private SwipeRefreshLayout mSwipeRefresh;
-    private ProgressBar mProgressBar;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -123,7 +121,6 @@ public class RecyclerViewMoviesFragment extends Fragment {
                 if(newState==RecyclerView.SCROLL_STATE_IDLE&&(lastVisibleItem+1)==mPictureAdapter.getItemCount()){
                     FetchMovieTask task = new FetchMovieTask(images,mPictureAdapter,++PAGE);
                     task.execute("popular");
-                    Log.d(TAG, "加载更多！");
                 }
             }
 
