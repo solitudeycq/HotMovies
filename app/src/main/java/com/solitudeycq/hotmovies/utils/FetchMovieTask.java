@@ -2,8 +2,6 @@ package com.solitudeycq.hotmovies.utils;
 
 import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.view.View;
-import android.widget.ProgressBar;
 
 import com.solitudeycq.hotmovies.bean.Movie;
 import com.solitudeycq.hotmovies.recylerview.PictureAdapter;
@@ -20,7 +18,6 @@ public class FetchMovieTask extends AsyncTask<String, Void, List<Movie>> {
     private PictureAdapter mAdapter;
     private SwipeRefreshLayout mSwipe;
     private int page = 1;
-    private ProgressBar mProgress;
 
     public FetchMovieTask(List<Movie> images,PictureAdapter mAdapter){
         this.images = images;
@@ -31,24 +28,15 @@ public class FetchMovieTask extends AsyncTask<String, Void, List<Movie>> {
         this.mAdapter = mAdapter;
         this.mSwipe = mSwipe;
     }
-    public FetchMovieTask(List<Movie> images, PictureAdapter mAdapter, int page, ProgressBar mProgress){
+    public FetchMovieTask(List<Movie> images, PictureAdapter mAdapter, int page){
         this.images = images;
         this.mAdapter = mAdapter;
         this.page = page;
-        this.mProgress = mProgress;
     }
     @Override
     protected List<Movie> doInBackground(String... strings) {
         String searchBy = strings[0];
         return ParseJSON.parseMoviesFromJson(OkHttpUtil.getMovies(searchBy,page));
-    }
-
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-        if(mProgress!=null){
-            mProgress.setVisibility(View.VISIBLE);
-        }
     }
 
     @Override
@@ -63,9 +51,6 @@ public class FetchMovieTask extends AsyncTask<String, Void, List<Movie>> {
             }
             if(mSwipe!=null){
                 mSwipe.setRefreshing(false);
-            }
-            if(mProgress!=null){
-                mProgress.setVisibility(View.INVISIBLE);
             }
         }
     }

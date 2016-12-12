@@ -61,7 +61,6 @@ public class RecyclerViewMoviesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_main, container, false);
-        mProgressBar = (ProgressBar) v.findViewById(R.id.pogress);
         mSwipeRefresh = (SwipeRefreshLayout) v.findViewById(R.id.swipetorefresh);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerview_movies);
         GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 3);
@@ -122,7 +121,7 @@ public class RecyclerViewMoviesFragment extends Fragment {
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 if(newState==RecyclerView.SCROLL_STATE_IDLE&&(lastVisibleItem+1)==mPictureAdapter.getItemCount()){
-                    FetchMovieTask task = new FetchMovieTask(images,mPictureAdapter,++PAGE,mProgressBar);
+                    FetchMovieTask task = new FetchMovieTask(images,mPictureAdapter,++PAGE);
                     task.execute("popular");
                     Log.d(TAG, "加载更多！");
                 }
