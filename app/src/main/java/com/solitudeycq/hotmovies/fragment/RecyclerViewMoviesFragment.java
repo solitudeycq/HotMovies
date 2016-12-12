@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.solitudeycq.hotmovies.R;
@@ -34,16 +35,19 @@ import jp.wasabeef.recyclerview.animators.ScaleInAnimator;
 
 public class RecyclerViewMoviesFragment extends Fragment {
     private static final String TAG = "RecyclerViewFragment";
+    private static int PAGE = 1;
 
     private RecyclerView mRecyclerView;
     private List<Movie> images = new ArrayList<>();
     private PictureAdapter mPictureAdapter;
     private SwipeRefreshLayout mSwipeRefresh;
+    private ProgressBar mProgressBar;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        PAGE = 1;
     }
 
     @Override
@@ -57,6 +61,7 @@ public class RecyclerViewMoviesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_main, container, false);
+        mProgressBar = (ProgressBar) v.findViewById(R.id.pogress);
         mSwipeRefresh = (SwipeRefreshLayout) v.findViewById(R.id.swipetorefresh);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerview_movies);
         GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 3);
@@ -72,6 +77,7 @@ public class RecyclerViewMoviesFragment extends Fragment {
             }
         });
         mRecyclerView.setAdapter(mPictureAdapter);
+        initLoadMore();
         return v;
     }
 
@@ -107,5 +113,27 @@ public class RecyclerViewMoviesFragment extends Fragment {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    private void initLoadMore(){
+        mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener(){
+            int lastVisibleItem;
+
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if(newState==RecyclerView.SCROLL_STATE_IDLE&&(lastVisibleItem+1)==mPictureAdapter.getItemCount()){
+                    FetchMovieTask task = new FetchMovieTask(images,mPictureAdapter,++PAGE,mProgressBar);
+                    task.execute("popular");
+                    Log.d(TAG, "加载更多！");
+                }
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                GridLayoutManager layout = (GridLayoutManager) mRecyclerView.getLayoutManager();
+                lastVisibleItem = layout.findLastVisibleItemPosition();
+            }
+        });
     }
 }
