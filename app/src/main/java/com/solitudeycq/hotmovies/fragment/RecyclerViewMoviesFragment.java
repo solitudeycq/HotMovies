@@ -24,6 +24,8 @@ import com.solitudeycq.hotmovies.utils.LogControl;
 import java.util.ArrayList;
 import java.util.List;
 
+import jp.wasabeef.recyclerview.animators.ScaleInAnimator;
+
 /**
  * Created by solitudeycq on 2016/12/9.
  */
@@ -56,6 +58,8 @@ public class RecyclerViewMoviesFragment extends Fragment {
         GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 3);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.addItemDecoration(new SpaceItemDecoration(15));
+        mRecyclerView.setItemAnimator(new ScaleInAnimator());
+        mRecyclerView.getItemAnimator().setAddDuration(500);
         mPictureAdapter = new PictureAdapter(images);
         mPictureAdapter.setOnItemClickLitener(new OnItemClickLitener() {
             @Override

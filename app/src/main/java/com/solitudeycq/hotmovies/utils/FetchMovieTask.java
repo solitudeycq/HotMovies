@@ -31,8 +31,9 @@ public class FetchMovieTask extends AsyncTask<String, Void, List<Movie>> {
             images.clear();
             for(Movie m:movies){
                 images.add(m);
+                mAdapter.notifyItemChanged(images.size()-1);
             }
-            mAdapter.notifyDataSetChanged();
+            //mAdapter.notifyDataSetChanged();
         }
     }
 }
