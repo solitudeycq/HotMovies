@@ -1,6 +1,5 @@
 package com.solitudeycq.hotmovies.fragment;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -14,23 +13,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.solitudeycq.hotmovies.BuildConfig;
 import com.solitudeycq.hotmovies.R;
 import com.solitudeycq.hotmovies.bean.Movie;
 import com.solitudeycq.hotmovies.recylerview.OnItemClickLitener;
 import com.solitudeycq.hotmovies.recylerview.PictureAdapter;
 import com.solitudeycq.hotmovies.recylerview.SpaceItemDecoration;
-import com.solitudeycq.hotmovies.utils.Constants;
+import com.solitudeycq.hotmovies.utils.FetchMovieTask;
 import com.solitudeycq.hotmovies.utils.LogControl;
-import com.solitudeycq.hotmovies.utils.ParseJSON;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
 
 /**
  * Created by solitudeycq on 2016/12/9.
@@ -41,7 +33,7 @@ public class RecyclerViewMoviesFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private List<Movie> images = new ArrayList<>();
-    private PictureAdapter mPictureAdapter;
+    private PictureAdapter mPictureAdapter = new PictureAdapter(images);
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,7 +44,7 @@ public class RecyclerViewMoviesFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        FetchMovieTask movies = new FetchMovieTask();
+        FetchMovieTask movies = new FetchMovieTask(images,mPictureAdapter);
         movies.execute("popular");
     }
 
@@ -85,8 +77,8 @@ public class RecyclerViewMoviesFragment extends Fragment {
         int id = item.getItemId();
         if (id == R.id.action_refresh) {
             LogControl.d(TAG, "刷新");
-            FetchMovieTask movies = new FetchMovieTask();
-            movies.execute("popular");
+            FetchMovieTask task = new FetchMovieTask(images,mPictureAdapter);
+            task.execute("popular");
             return true;
         }
         if (id == R.id.action_settings) {
@@ -94,43 +86,5 @@ public class RecyclerViewMoviesFragment extends Fragment {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    public class FetchMovieTask extends AsyncTask<String, Void, List<Movie>> {
-        private static final String TAG = "FetchMovieTask";
-
-        @Override
-        protected List<Movie> doInBackground(String... strings) {
-            String movieJsonStr = null;
-            String url = null;
-            String searchBy = strings[0];
-            if(searchBy.equals("popular")){
-                url = Constants.GET_MOVIES_BY_POPULAR + BuildConfig.THEME_MOVIE_DB_API_KEY;
-            }else{
-                url = Constants.GET_MOVIES_BY_TOPRATED + BuildConfig.THEME_MOVIE_DB_API_KEY;
-            }
-            OkHttpClient client = new OkHttpClient();
-            Request request = new Request.Builder()
-                    .url(url)
-                    .build();
-            try {
-                Response response = client.newCall(request).execute();
-                movieJsonStr = response.body().string();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return ParseJSON.parseMoviesFromJson(movieJsonStr);
-        }
-
-        @Override
-        protected void onPostExecute(List<Movie> movies) {
-            if (movies!=null&&movies.size()!=0){
-                images.clear();
-                for(Movie m:movies){
-                    images.add(m);
-                }
-                mPictureAdapter.notifyDataSetChanged();
-            }
-        }
     }
 }
