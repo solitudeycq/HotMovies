@@ -28,12 +28,13 @@ public class FetchMovieTask extends AsyncTask<String, Void, List<Movie>> {
     @Override
     protected void onPostExecute(List<Movie> movies) {
         if (movies!=null&&movies.size()!=0){
-            images.clear();
+            //images.clear();
             for(Movie m:movies){
-                images.add(m);
-                mAdapter.notifyItemChanged(images.size()-1);
+                if(!images.contains(m)){
+                    images.add(m);
+                    mAdapter.notifyItemChanged(images.size()-1);
+                }
             }
-            //mAdapter.notifyDataSetChanged();
         }
     }
 }

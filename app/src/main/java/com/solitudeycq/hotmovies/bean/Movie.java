@@ -61,4 +61,13 @@ public class Movie implements Serializable {
     public void setReleaseDate(String releaseDate) {
         this.releaseDate = releaseDate;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this.getId().equals(((Movie)obj).getId())){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
