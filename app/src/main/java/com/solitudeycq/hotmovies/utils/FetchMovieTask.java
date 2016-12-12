@@ -1,6 +1,7 @@
 package com.solitudeycq.hotmovies.utils;
 
 import android.os.AsyncTask;
+import android.support.v4.widget.SwipeRefreshLayout;
 
 import com.solitudeycq.hotmovies.bean.Movie;
 import com.solitudeycq.hotmovies.recylerview.PictureAdapter;
@@ -15,9 +16,15 @@ public class FetchMovieTask extends AsyncTask<String, Void, List<Movie>> {
     private static final String TAG = "FetchMovieTask";
     private List<Movie> images;
     private PictureAdapter mAdapter;
+    private SwipeRefreshLayout mSwipe;
     public FetchMovieTask(List<Movie> images,PictureAdapter mAdapter){
         this.images = images;
         this.mAdapter = mAdapter;
+    }
+    public FetchMovieTask(List<Movie> images,PictureAdapter mAdapter,SwipeRefreshLayout mSwipe){
+        this.images = images;
+        this.mAdapter = mAdapter;
+        this.mSwipe = mSwipe;
     }
     @Override
     protected List<Movie> doInBackground(String... strings) {
@@ -34,6 +41,9 @@ public class FetchMovieTask extends AsyncTask<String, Void, List<Movie>> {
                     images.add(m);
                     mAdapter.notifyItemChanged(images.size()-1);
                 }
+            }
+            if(mSwipe!=null){
+                mSwipe.setRefreshing(false);
             }
         }
     }

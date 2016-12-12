@@ -3,8 +3,10 @@ package com.solitudeycq.hotmovies.fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -36,6 +38,7 @@ public class RecyclerViewMoviesFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private List<Movie> images = new ArrayList<>();
     private PictureAdapter mPictureAdapter;
+    private SwipeRefreshLayout mSwipeRefresh;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,6 +57,7 @@ public class RecyclerViewMoviesFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_main, container, false);
+        mSwipeRefresh = (SwipeRefreshLayout) v.findViewById(R.id.swipetorefresh);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerview_movies);
         GridLayoutManager mLayoutManager = new GridLayoutManager(getActivity(), 3);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -69,6 +73,19 @@ public class RecyclerViewMoviesFragment extends Fragment {
         });
         mRecyclerView.setAdapter(mPictureAdapter);
         return v;
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                Log.d(TAG, "下拉刷新！");
+                FetchMovieTask movies = new FetchMovieTask(images,mPictureAdapter,mSwipeRefresh);
+                movies.execute("popular");
+            }
+        });
     }
 
     @Override
