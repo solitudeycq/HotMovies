@@ -85,6 +85,8 @@ public class RecyclerViewMoviesFragment extends Fragment {
         int id = item.getItemId();
         if (id == R.id.action_refresh) {
             LogControl.d(TAG, "刷新");
+            FetchMovieTask movies = new FetchMovieTask();
+            movies.execute("popular");
             return true;
         }
         if (id == R.id.action_settings) {
