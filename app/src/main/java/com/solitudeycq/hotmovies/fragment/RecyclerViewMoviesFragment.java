@@ -24,14 +24,13 @@ import com.solitudeycq.hotmovies.utils.Constants;
 import com.solitudeycq.hotmovies.utils.LogControl;
 import com.solitudeycq.hotmovies.utils.ParseJSON;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 /**
  * Created by solitudeycq on 2016/12/9.
@@ -54,7 +53,7 @@ public class RecyclerViewMoviesFragment extends Fragment {
     public void onStart() {
         super.onStart();
         FetchMovieTask movies = new FetchMovieTask();
-        movies.execute();
+        movies.execute("popular");
     }
 
     @Nullable
@@ -101,46 +100,22 @@ public class RecyclerViewMoviesFragment extends Fragment {
         @Override
         protected List<Movie> doInBackground(String... strings) {
             String movieJsonStr = null;
-            HttpURLConnection urlConnection = null;
-            BufferedReader reader = null;
+            String url = null;
+            String searchBy = strings[0];
+            if(searchBy.equals("popular")){
+                url = Constants.GET_MOVIES_BY_POPULAR + BuildConfig.THEME_MOVIE_DB_API_KEY;
+            }else{
+                url = Constants.GET_MOVIES_BY_TOPRATED + BuildConfig.THEME_MOVIE_DB_API_KEY;
+            }
+            OkHttpClient client = new OkHttpClient();
+            Request request = new Request.Builder()
+                    .url(url)
+                    .build();
             try {
-                URL url = new URL(Constants.GET_MOVIES_BY_POPULAR + BuildConfig.THEME_MOVIE_DB_API_KEY);
-                LogControl.d(TAG, "URL:" + url.toString());
-                urlConnection = (HttpURLConnection) url.openConnection();
-                urlConnection.setRequestMethod("GET");
-                urlConnection.connect();
-
-                InputStream inputStream = urlConnection.getInputStream();
-                StringBuffer buffer = new StringBuffer();
-
-                if (inputStream == null) {
-                    // Nothing to do.
-                    return null;
-                }
-                reader = new BufferedReader(new InputStreamReader(inputStream));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    buffer.append(line + "\n");
-                }
-                if (buffer.length() == 0) {
-                    // Stream was empty.  No point in parsing.
-                    return null;
-                }
-                movieJsonStr = buffer.toString();
+                Response response = client.newCall(request).execute();
+                movieJsonStr = response.body().string();
             } catch (IOException e) {
                 e.printStackTrace();
-                return null;
-            } finally {
-                if (urlConnection != null) {
-                    urlConnection.disconnect();
-                }
-                if (reader != null) {
-                    try {
-                        reader.close();
-                    } catch (final IOException e) {
-                        LogControl.e(TAG, "Error closing stream"+e.toString());
-                    }
-                }
             }
             return ParseJSON.parseMoviesFromJson(movieJsonStr);
         }
