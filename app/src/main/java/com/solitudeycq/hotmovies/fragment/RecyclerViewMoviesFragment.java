@@ -33,7 +33,7 @@ public class RecyclerViewMoviesFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
     private List<Movie> images = new ArrayList<>();
-    private PictureAdapter mPictureAdapter = new PictureAdapter(images);
+    private PictureAdapter mPictureAdapter;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
