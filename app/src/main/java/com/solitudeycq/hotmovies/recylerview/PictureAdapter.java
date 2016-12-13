@@ -7,6 +7,7 @@ import android.widget.Toast;
 
 import com.solitudeycq.hotmovies.R;
 import com.solitudeycq.hotmovies.bean.Movie;
+import com.solitudeycq.hotmovies.utils.LogControl;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
@@ -17,6 +18,7 @@ import java.util.List;
  */
 
 public class PictureAdapter extends RecyclerView.Adapter<PictureViewHolder> {
+    private static final String TAG = "PictureAdapter";
     private OnItemClickLitener mOnItemClickLitener;
     List<Movie> images;
     public PictureAdapter(List<Movie> resources){
@@ -42,7 +44,9 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureViewHolder> {
                     .placeholder(R.drawable.default_pic)
                     .into(holder.mImageView, new Callback() {
                         @Override
-                        public void onSuccess() {}
+                        public void onSuccess() {
+                            LogControl.d(TAG,"图片加载成功！");
+                        }
                         @Override
                         public void onError() {
                             Toast.makeText(holder.itemView.getContext(),"图片加载失败，使用默认图片代替",Toast.LENGTH_SHORT).show();
