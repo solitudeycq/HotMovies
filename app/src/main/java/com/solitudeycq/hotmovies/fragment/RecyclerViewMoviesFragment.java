@@ -118,7 +118,7 @@ public class RecyclerViewMoviesFragment extends Fragment {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
-                if(newState==RecyclerView.SCROLL_STATE_IDLE&&(lastVisibleItem+1)==mPictureAdapter.getItemCount()){
+                if(newState==RecyclerView.SCROLL_STATE_IDLE&&(lastVisibleItem+1)==PAGE*20){
                     FetchMovieTask task = new FetchMovieTask(images,mPictureAdapter,++PAGE);
                     task.execute("popular");
                 }
@@ -128,7 +128,8 @@ public class RecyclerViewMoviesFragment extends Fragment {
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 GridLayoutManager layout = (GridLayoutManager) mRecyclerView.getLayoutManager();
-                lastVisibleItem = layout.findLastVisibleItemPosition();
+                lastVisibleItem = layout.findLastCompletelyVisibleItemPosition();
+                LogControl.d(TAG,lastVisibleItem+1);
             }
         });
     }
