@@ -42,6 +42,7 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureViewHolder> {
             Picasso.with(holder.itemView.getContext())
                     .load(images.get(position).getPicture())
                     .placeholder(R.drawable.default_pic)
+                    .error(R.drawable.default_pic)
                     .into(holder.mImageView, new Callback() {
                         @Override
                         public void onSuccess() {
