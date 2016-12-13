@@ -7,13 +7,10 @@ import android.widget.Toast;
 
 import com.solitudeycq.hotmovies.R;
 import com.solitudeycq.hotmovies.bean.Movie;
-import com.solitudeycq.hotmovies.utils.LogControl;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by solitudeycq on 2016/12/9.
@@ -45,10 +42,7 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureViewHolder> {
                     .placeholder(R.drawable.default_pic)
                     .into(holder.mImageView, new Callback() {
                         @Override
-                        public void onSuccess() {
-                            LogControl.d(TAG, "加载成功！");
-                        }
-
+                        public void onSuccess() {}
                         @Override
                         public void onError() {
                             Toast.makeText(holder.itemView.getContext(),"图片加载失败，使用默认图片代替",Toast.LENGTH_SHORT).show();
