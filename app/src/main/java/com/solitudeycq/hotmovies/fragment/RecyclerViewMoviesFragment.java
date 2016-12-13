@@ -1,5 +1,6 @@
 package com.solitudeycq.hotmovies.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.solitudeycq.hotmovies.R;
+import com.solitudeycq.hotmovies.activity.SettingsActivity;
 import com.solitudeycq.hotmovies.bean.Movie;
 import com.solitudeycq.hotmovies.recylerview.OnItemClickLitener;
 import com.solitudeycq.hotmovies.recylerview.PictureAdapter;
@@ -106,7 +108,8 @@ public class RecyclerViewMoviesFragment extends Fragment {
             return true;
         }
         if (id == R.id.action_settings) {
-            LogControl.d(TAG, "设置");
+            Intent i = new Intent(getActivity(), SettingsActivity.class);
+            startActivity(i);
             return true;
         }
         return super.onOptionsItemSelected(item);
