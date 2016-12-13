@@ -1,7 +1,9 @@
 package com.solitudeycq.hotmovies.fragment;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -23,7 +25,6 @@ import com.solitudeycq.hotmovies.recylerview.OnItemClickLitener;
 import com.solitudeycq.hotmovies.recylerview.PictureAdapter;
 import com.solitudeycq.hotmovies.recylerview.SpaceItemDecoration;
 import com.solitudeycq.hotmovies.utils.FetchMovieTask;
-import com.solitudeycq.hotmovies.utils.LogControl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,6 +43,7 @@ public class RecyclerViewMoviesFragment extends Fragment {
     private List<Movie> images = new ArrayList<>();
     private PictureAdapter mPictureAdapter;
     private SwipeRefreshLayout mSwipeRefresh;
+    private String searchBy = "popular";
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,7 +56,10 @@ public class RecyclerViewMoviesFragment extends Fragment {
     public void onStart() {
         super.onStart();
         FetchMovieTask movies = new FetchMovieTask(images,mPictureAdapter);
-        movies.execute("popular");
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        searchBy = prefs.getString(getString(R.string.pref_searchBy_key),"popular");
+        Log.d(TAG, searchBy);
+        movies.execute(searchBy);
     }
 
     @Nullable
@@ -86,9 +91,8 @@ public class RecyclerViewMoviesFragment extends Fragment {
         mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Log.d(TAG, "下拉刷新！");
                 FetchMovieTask movies = new FetchMovieTask(images,mPictureAdapter,mSwipeRefresh);
-                movies.execute("popular");
+                movies.execute(searchBy);
             }
         });
     }
@@ -102,9 +106,8 @@ public class RecyclerViewMoviesFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_refresh) {
-            LogControl.d(TAG, "刷新");
             FetchMovieTask task = new FetchMovieTask(images,mPictureAdapter);
-            task.execute("popular");
+            task.execute(searchBy);
             return true;
         }
         if (id == R.id.action_settings) {
@@ -123,7 +126,7 @@ public class RecyclerViewMoviesFragment extends Fragment {
                 super.onScrollStateChanged(recyclerView, newState);
                 if(newState==RecyclerView.SCROLL_STATE_IDLE&&(lastVisibleItem+1)==PAGE*20){
                     FetchMovieTask task = new FetchMovieTask(images,mPictureAdapter,++PAGE);
-                    task.execute("popular");
+                    task.execute(searchBy);
                 }
             }
 
@@ -132,7 +135,6 @@ public class RecyclerViewMoviesFragment extends Fragment {
                 super.onScrolled(recyclerView, dx, dy);
                 GridLayoutManager layout = (GridLayoutManager) mRecyclerView.getLayoutManager();
                 lastVisibleItem = layout.findLastCompletelyVisibleItemPosition();
-                LogControl.d(TAG,lastVisibleItem+1);
             }
         });
     }
