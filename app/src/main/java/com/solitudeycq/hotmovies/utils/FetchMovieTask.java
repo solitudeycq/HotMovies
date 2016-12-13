@@ -18,10 +18,17 @@ public class FetchMovieTask extends AsyncTask<String, Void, List<Movie>> {
     private PictureAdapter mAdapter;
     private SwipeRefreshLayout mSwipe;
     private int page = 1;
+    private boolean isPrefsChanged = false;
 
     public FetchMovieTask(List<Movie> images,PictureAdapter mAdapter){
         this.images = images;
         this.mAdapter = mAdapter;
+    }
+
+    public FetchMovieTask(List<Movie> images,PictureAdapter mAdapter,boolean isPrefsChanged){
+        this.images = images;
+        this.mAdapter = mAdapter;
+        this.isPrefsChanged = isPrefsChanged;
     }
     public FetchMovieTask(List<Movie> images,PictureAdapter mAdapter,SwipeRefreshLayout mSwipe){
         this.images = images;
@@ -42,7 +49,9 @@ public class FetchMovieTask extends AsyncTask<String, Void, List<Movie>> {
     @Override
     protected void onPostExecute(List<Movie> movies) {
         if (movies!=null&&movies.size()!=0){
-            //images.clear();
+            if(isPrefsChanged){
+                images.clear();
+            }
             for(Movie m:movies){
                 if(!images.contains(m)){
                     images.add(m);

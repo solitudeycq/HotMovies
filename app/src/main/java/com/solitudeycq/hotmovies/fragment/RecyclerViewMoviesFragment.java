@@ -55,11 +55,17 @@ public class RecyclerViewMoviesFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
-        FetchMovieTask movies = new FetchMovieTask(images,mPictureAdapter);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        searchBy = prefs.getString(getString(R.string.pref_searchBy_key),"popular");
-        Log.d(TAG, searchBy);
-        movies.execute(searchBy);
+        if(searchBy.equals(prefs.getString(getString(R.string.pref_searchBy_key),"popular"))){
+            FetchMovieTask movies = new FetchMovieTask(images,mPictureAdapter,false);
+            Log.d(TAG, searchBy);
+            movies.execute(searchBy);
+        }else{
+            searchBy = prefs.getString(getString(R.string.pref_searchBy_key),"popular");
+            FetchMovieTask movies = new FetchMovieTask(images,mPictureAdapter,true);
+            Log.d(TAG, searchBy);
+            movies.execute(searchBy);
+        }
     }
 
     @Nullable
