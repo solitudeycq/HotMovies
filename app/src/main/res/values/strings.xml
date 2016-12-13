@@ -9,4 +9,13 @@
     <string name="pref_searchBy_popular">popular</string>
     <string name="pref_serachBy_toprated">toprated</string>
     <string name="pref_searchBy_key">searchBy</string>
+    <string name="title_activity_movie_detail">MovieDetailActivity</string>
+    <string name="default_movie_overview">电影，是由活动照相术和幻灯放映术结合发展起来的一种连续的视
+        频画面，是一门视觉和听觉的现代艺术，也是一门可以容纳悲喜剧与文学戏剧、摄影、绘画、音乐、舞蹈、
+        文字、雕塑、建筑等多种艺术的现代科技与艺术的综合体。但它又具有独自的特征，电影在艺术表现力上
+        不但具有其它各种艺术的特征，又因可以运用蒙太奇这种艺术性突跃的电影组接技巧，具有超越其它一切
+        艺术的表现手段，而且影片可以大量复制放映，随着现代社会的发展，电影已深入到人类社会生活的方方
+        面面，是人们不可或缺的一部分。电影根据视觉暂留原理，运用照相手段把外界事物的影像（以及声音）
+        摄录在胶片上，通过放映（同时还原声音），用电的方式将活动影像投射到银幕上（以及同步声音）以表
+        现一定内容的现代技术。</string>
 </resources>

@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.solitudeycq.hotmovies.R;
+import com.solitudeycq.hotmovies.activity.MovieDetailActivity;
 import com.solitudeycq.hotmovies.activity.SettingsActivity;
 import com.solitudeycq.hotmovies.bean.Movie;
 import com.solitudeycq.hotmovies.recylerview.OnItemClickLitener;
@@ -85,6 +86,8 @@ public class RecyclerViewMoviesFragment extends Fragment {
             @Override
             public void onItemClick(View view, int position) {
                 Toast.makeText(getActivity(), (position + 1) + "", Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(getActivity(), MovieDetailActivity.class);
+                startActivity(i);
             }
         });
         mRecyclerView.setAdapter(mPictureAdapter);
