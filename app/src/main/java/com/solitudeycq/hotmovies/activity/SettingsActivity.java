@@ -46,4 +46,9 @@ public class SettingsActivity extends PreferenceActivity implements Preference.O
                         .getDefaultSharedPreferences(preference.getContext())
                         .getString(preference.getKey(), ""));
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }

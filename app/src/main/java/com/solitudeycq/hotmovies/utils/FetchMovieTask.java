@@ -51,6 +51,7 @@ public class FetchMovieTask extends AsyncTask<String, Void, List<Movie>> {
         if (movies!=null&&movies.size()!=0){
             if(isPrefsChanged){
                 images.clear();
+                mAdapter.notifyDataSetChanged();
             }
             for(Movie m:movies){
                 if(!images.contains(m)){

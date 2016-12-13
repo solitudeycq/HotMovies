@@ -63,6 +63,7 @@ public class RecyclerViewMoviesFragment extends Fragment {
         }else{
             searchBy = prefs.getString(getString(R.string.pref_searchBy_key),"popular");
             FetchMovieTask movies = new FetchMovieTask(images,mPictureAdapter,true);
+            PAGE = 1;
             Log.d(TAG, searchBy);
             movies.execute(searchBy);
         }
