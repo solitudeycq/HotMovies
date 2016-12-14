@@ -71,9 +71,9 @@ public class PictureAdapter extends RecyclerView.Adapter<PictureViewHolder> {
     @Override
     public int getItemCount() {
         if(images!=null){
-            return images.size();
+            return images.size() == 0 ? 20 : images.size();
         }else{
-            return 0;
+            return 20;
         }
     }
 }
