@@ -1,7 +1,5 @@
 package com.solitudeycq.hotmovies.utils;
 
-import android.util.Log;
-
 import com.solitudeycq.hotmovies.BuildConfig;
 
 import java.io.IOException;
@@ -10,13 +8,12 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-import static android.content.ContentValues.TAG;
-
 /**
  * Created by solitudeycq on 2016/12/12.
  */
 
 public class OkHttpUtil {
+    private static final String TAG = "OkHttpUtil";
     public static String getMovies(String searchBy,int page){
         String url = null;
         String movieJsonStr = null;
@@ -25,7 +22,8 @@ public class OkHttpUtil {
         }else{
             url = Constants.GET_MOVIES_BY_TOPRATED + BuildConfig.THEME_MOVIE_DB_API_KEY + "&page=" + page;
         }
-        Log.d(TAG, url);
+        LogControl.d(TAG, url);
+        LogControl.d(TAG,page);
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url(url)

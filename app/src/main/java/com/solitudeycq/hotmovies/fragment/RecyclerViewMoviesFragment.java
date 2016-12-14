@@ -1,5 +1,6 @@
 package com.solitudeycq.hotmovies.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.gson.Gson;
 import com.solitudeycq.hotmovies.R;
 import com.solitudeycq.hotmovies.activity.MovieDetailActivity;
 import com.solitudeycq.hotmovies.activity.SettingsActivity;
@@ -25,7 +26,12 @@ import com.solitudeycq.hotmovies.recylerview.OnItemClickLitener;
 import com.solitudeycq.hotmovies.recylerview.PictureAdapter;
 import com.solitudeycq.hotmovies.recylerview.SpaceItemDecoration;
 import com.solitudeycq.hotmovies.utils.FetchMovieTask;
+import com.solitudeycq.hotmovies.utils.LogControl;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,32 +52,25 @@ public class RecyclerViewMoviesFragment extends Fragment {
     private String searchBy = "popular";
 
     @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        LogControl.d(TAG,"onAttach");
+        LogControl.d(TAG,images.size());
+    }
+
+    @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        LogControl.d(TAG,"onCreate");
+        LogControl.d(TAG,images.size());
         setHasOptionsMenu(true);
         PAGE = 1;
     }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        if(searchBy.equals(prefs.getString(getString(R.string.pref_searchBy_key),"popular"))){
-            FetchMovieTask movies = new FetchMovieTask(images,mPictureAdapter,false);
-            Log.d(TAG, searchBy);
-            movies.execute(searchBy);
-        }else{
-            searchBy = prefs.getString(getString(R.string.pref_searchBy_key),"popular");
-            FetchMovieTask movies = new FetchMovieTask(images,mPictureAdapter,true);
-            PAGE = 1;
-            Log.d(TAG, searchBy);
-            movies.execute(searchBy);
-        }
-    }
-
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        LogControl.d(TAG,"onCreateView");
+        LogControl.d(TAG,images.size());
         View v = inflater.inflate(R.layout.fragment_main, container, false);
         mSwipeRefresh = (SwipeRefreshLayout) v.findViewById(R.id.swipetorefresh);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerview_movies);
@@ -95,10 +94,11 @@ public class RecyclerViewMoviesFragment extends Fragment {
         initLoadMore();
         return v;
     }
-
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        LogControl.d(TAG,"onViewCreated");
+        LogControl.d(TAG,images.size());
         mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -106,6 +106,86 @@ public class RecyclerViewMoviesFragment extends Fragment {
                 movies.execute(searchBy);
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        LogControl.d(TAG,"onStart");
+        LogControl.d(TAG,images.size());
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        if(searchBy.equals(prefs.getString(getString(R.string.pref_searchBy_key),"popular"))){
+            FetchMovieTask movies = new FetchMovieTask(images,mPictureAdapter,false);
+            LogControl.d(TAG, searchBy);
+            movies.execute(searchBy);
+        }else{
+            searchBy = prefs.getString(getString(R.string.pref_searchBy_key),"popular");
+            FetchMovieTask movies = new FetchMovieTask(images,mPictureAdapter,true);
+            PAGE = 1;
+            LogControl.d(TAG, searchBy);
+            movies.execute(searchBy);
+        }
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        LogControl.d(TAG,"onResume");
+        LogControl.d(TAG,images.size());
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        LogControl.d(TAG,"onPause");
+        LogControl.d(TAG,images.size());
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        LogControl.d(TAG,"onStop");
+        LogControl.d(TAG,images.size());
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        LogControl.d(TAG,"onDestroyView");
+        LogControl.d(TAG,images.size());
+    }
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        LogControl.d(TAG,"onDestroy");
+        LogControl.d(TAG,images.size());
+        Gson gson = new Gson();
+        FileWriter writer = null;
+        BufferedWriter bufferedWriter = null;
+        if(images!=null&&images.size()!=0){
+            String json = gson.toJson(images);
+            File file = new File(getActivity().getExternalFilesDir(null),"images.json");
+            try {
+                writer = new FileWriter(file);
+                bufferedWriter = new BufferedWriter(writer);
+                bufferedWriter.write(json);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }finally{
+                if(bufferedWriter!=null){
+                    try {
+                        bufferedWriter.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        LogControl.d(TAG,"onDetach");
+        LogControl.d(TAG,images.size());
     }
 
     @Override
