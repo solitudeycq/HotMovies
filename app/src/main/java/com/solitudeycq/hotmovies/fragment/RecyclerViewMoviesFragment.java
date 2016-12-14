@@ -71,18 +71,18 @@ public class RecyclerViewMoviesFragment extends Fragment {
         mRecyclerView.setItemAnimator(new ScaleInAnimator());
         mRecyclerView.getItemAnimator().setAddDuration(500);
         mPictureAdapter = new PictureAdapter(images);
-        if(images.size()!=0){
-            mPictureAdapter.setOnItemClickLitener(new OnItemClickLitener() {
-                @Override
-                public void onItemClick(View view, int position) {
-                    //Toast.makeText(getActivity(), (position + 1) + "", Toast.LENGTH_SHORT).show();
+        mPictureAdapter.setOnItemClickLitener(new OnItemClickLitener() {
+            @Override
+            public void onItemClick(View view, int position) {
+                //Toast.makeText(getActivity(), (position + 1) + "", Toast.LENGTH_SHORT).show();
+                if(images.size()!=0){
                     Movie m = images.get(position);
                     Intent i = new Intent(getActivity(), MovieDetailActivity.class);
                     i.putExtra("movie",m);
                     startActivity(i);
                 }
-            });
-        }
+            }
+        });
         mRecyclerView.setAdapter(mPictureAdapter);
         initLoadMore();
         getMovies();
