@@ -17,7 +17,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.google.gson.Gson;
 import com.solitudeycq.hotmovies.R;
 import com.solitudeycq.hotmovies.activity.MovieDetailActivity;
 import com.solitudeycq.hotmovies.activity.SettingsActivity;
@@ -27,11 +26,8 @@ import com.solitudeycq.hotmovies.recylerview.PictureAdapter;
 import com.solitudeycq.hotmovies.recylerview.SpaceItemDecoration;
 import com.solitudeycq.hotmovies.utils.FetchMovieTask;
 import com.solitudeycq.hotmovies.utils.LogControl;
+import com.solitudeycq.hotmovies.utils.WriteAndReadJsonFromSD;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -116,28 +112,7 @@ public class RecyclerViewMoviesFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Gson gson = new Gson();
-        FileWriter writer = null;
-        BufferedWriter bufferedWriter = null;
-        if(images!=null&&images.size()!=0){
-            String json = gson.toJson(images);
-            File file = new File(getActivity().getExternalFilesDir(null),"images.json");
-            try {
-                writer = new FileWriter(file);
-                bufferedWriter = new BufferedWriter(writer);
-                bufferedWriter.write(json);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }finally{
-                if(bufferedWriter!=null){
-                    try {
-                        bufferedWriter.close();
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-        }
+        WriteAndReadJsonFromSD.WriteMoviesToFile(getActivity(),images);
     }
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
