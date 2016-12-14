@@ -24,6 +24,7 @@ import com.solitudeycq.hotmovies.bean.Movie;
 import com.solitudeycq.hotmovies.recylerview.OnItemClickLitener;
 import com.solitudeycq.hotmovies.recylerview.PictureAdapter;
 import com.solitudeycq.hotmovies.recylerview.SpaceItemDecoration;
+import com.solitudeycq.hotmovies.utils.CheckNetWork;
 import com.solitudeycq.hotmovies.utils.FetchMovieTask;
 import com.solitudeycq.hotmovies.utils.LogControl;
 import com.solitudeycq.hotmovies.utils.WriteAndReadJsonFromSD;
@@ -58,8 +59,10 @@ public class RecyclerViewMoviesFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        images = WriteAndReadJsonFromSD.ReadMoviesFromFile(getActivity(),images);
-        LogControl.d(TAG,images.size());
+        if(!CheckNetWork.isOnline(getActivity())){
+            images = WriteAndReadJsonFromSD.ReadMoviesFromFile(getActivity(),images);
+            LogControl.d(TAG,images.size());
+        }
     }
     @Nullable
     @Override
