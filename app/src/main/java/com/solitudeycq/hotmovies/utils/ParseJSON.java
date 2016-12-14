@@ -1,11 +1,14 @@
 package com.solitudeycq.hotmovies.utils;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.solitudeycq.hotmovies.bean.Movie;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +17,7 @@ import java.util.List;
  */
 
 public class ParseJSON {
+    private static final String TAG = "ParseJSON";
 
     public static List<Movie> parseMoviesFromJson(String result){
         List<Movie> movies = new ArrayList<>();
@@ -32,10 +36,19 @@ public class ParseJSON {
                     m.setReleaseDate(j.getString("release_date"));
                     movies.add(m);
                 }
+                LogControl.d(TAG,"从网络解析电影成功");
             } catch (JSONException e) {
+                LogControl.d(TAG,"从网络解析电影失败");
                 e.printStackTrace();
             }
         }
+        return movies;
+    }
+    public static List<Movie> parseMoviesFromJsonFile(String result){
+        List<Movie> movies = new ArrayList<>();
+        Gson gson = new Gson();
+        Type collectionType = new TypeToken<List<Movie>>(){}.getType();
+        movies = gson.fromJson(result,collectionType);
         return movies;
     }
 }
