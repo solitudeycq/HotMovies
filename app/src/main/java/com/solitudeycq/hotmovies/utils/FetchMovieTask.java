@@ -34,6 +34,7 @@ public class FetchMovieTask extends AsyncTask<String, Void, List<Movie>> {
         this.images = images;
         this.mAdapter = mAdapter;
         this.mSwipe = mSwipe;
+        isPrefsChanged = true;
     }
     public FetchMovieTask(List<Movie> images, PictureAdapter mAdapter, int page){
         this.images = images;

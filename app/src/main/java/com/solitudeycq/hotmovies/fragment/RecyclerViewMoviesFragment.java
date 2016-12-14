@@ -71,16 +71,18 @@ public class RecyclerViewMoviesFragment extends Fragment {
         mRecyclerView.setItemAnimator(new ScaleInAnimator());
         mRecyclerView.getItemAnimator().setAddDuration(500);
         mPictureAdapter = new PictureAdapter(images);
-        mPictureAdapter.setOnItemClickLitener(new OnItemClickLitener() {
-            @Override
-            public void onItemClick(View view, int position) {
-                //Toast.makeText(getActivity(), (position + 1) + "", Toast.LENGTH_SHORT).show();
-                Movie m = images.get(position);
-                Intent i = new Intent(getActivity(), MovieDetailActivity.class);
-                i.putExtra("movie",m);
-                startActivity(i);
-            }
-        });
+        if(images.size()!=0){
+            mPictureAdapter.setOnItemClickLitener(new OnItemClickLitener() {
+                @Override
+                public void onItemClick(View view, int position) {
+                    //Toast.makeText(getActivity(), (position + 1) + "", Toast.LENGTH_SHORT).show();
+                    Movie m = images.get(position);
+                    Intent i = new Intent(getActivity(), MovieDetailActivity.class);
+                    i.putExtra("movie",m);
+                    startActivity(i);
+                }
+            });
+        }
         mRecyclerView.setAdapter(mPictureAdapter);
         initLoadMore();
         getMovies();
@@ -92,6 +94,7 @@ public class RecyclerViewMoviesFragment extends Fragment {
         mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
+                PAGE = 1;
                 FetchMovieTask movies = new FetchMovieTask(images,mPictureAdapter,mSwipeRefresh);
                 movies.execute(searchBy);
             }
@@ -122,7 +125,8 @@ public class RecyclerViewMoviesFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_refresh) {
-            FetchMovieTask task = new FetchMovieTask(images,mPictureAdapter);
+            PAGE = 1;
+            FetchMovieTask task = new FetchMovieTask(images,mPictureAdapter,true);
             task.execute(searchBy);
             return true;
         }
