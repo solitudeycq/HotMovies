@@ -54,23 +54,18 @@ public class RecyclerViewMoviesFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        LogControl.d(TAG,"onAttach");
-        LogControl.d(TAG,images.size());
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        searchBy = prefs.getString(getString(R.string.pref_searchBy_key),"popular");
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        LogControl.d(TAG,"onCreate");
-        LogControl.d(TAG,images.size());
         setHasOptionsMenu(true);
-        PAGE = 1;
     }
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        LogControl.d(TAG,"onCreateView");
-        LogControl.d(TAG,images.size());
         View v = inflater.inflate(R.layout.fragment_main, container, false);
         mSwipeRefresh = (SwipeRefreshLayout) v.findViewById(R.id.swipetorefresh);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.recyclerview_movies);
@@ -92,13 +87,12 @@ public class RecyclerViewMoviesFragment extends Fragment {
         });
         mRecyclerView.setAdapter(mPictureAdapter);
         initLoadMore();
+        getMovies();
         return v;
     }
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        LogControl.d(TAG,"onViewCreated");
-        LogControl.d(TAG,images.size());
         mSwipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -107,18 +101,11 @@ public class RecyclerViewMoviesFragment extends Fragment {
             }
         });
     }
-
     @Override
     public void onStart() {
         super.onStart();
-        LogControl.d(TAG,"onStart");
-        LogControl.d(TAG,images.size());
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
-        if(searchBy.equals(prefs.getString(getString(R.string.pref_searchBy_key),"popular"))){
-            FetchMovieTask movies = new FetchMovieTask(images,mPictureAdapter,false);
-            LogControl.d(TAG, searchBy);
-            movies.execute(searchBy);
-        }else{
+        if(!(searchBy.equals(prefs.getString(getString(R.string.pref_searchBy_key),"popular")))){
             searchBy = prefs.getString(getString(R.string.pref_searchBy_key),"popular");
             FetchMovieTask movies = new FetchMovieTask(images,mPictureAdapter,true);
             PAGE = 1;
@@ -127,36 +114,8 @@ public class RecyclerViewMoviesFragment extends Fragment {
         }
     }
     @Override
-    public void onResume() {
-        super.onResume();
-        LogControl.d(TAG,"onResume");
-        LogControl.d(TAG,images.size());
-    }
-    @Override
-    public void onPause() {
-        super.onPause();
-        LogControl.d(TAG,"onPause");
-        LogControl.d(TAG,images.size());
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        LogControl.d(TAG,"onStop");
-        LogControl.d(TAG,images.size());
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        LogControl.d(TAG,"onDestroyView");
-        LogControl.d(TAG,images.size());
-    }
-    @Override
     public void onDestroy() {
         super.onDestroy();
-        LogControl.d(TAG,"onDestroy");
-        LogControl.d(TAG,images.size());
         Gson gson = new Gson();
         FileWriter writer = null;
         BufferedWriter bufferedWriter = null;
@@ -180,19 +139,10 @@ public class RecyclerViewMoviesFragment extends Fragment {
             }
         }
     }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        LogControl.d(TAG,"onDetach");
-        LogControl.d(TAG,images.size());
-    }
-
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.recyclerviewfragment, menu);
     }
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -211,7 +161,6 @@ public class RecyclerViewMoviesFragment extends Fragment {
     private void initLoadMore(){
         mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener(){
             int lastVisibleItem;
-
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
@@ -220,7 +169,6 @@ public class RecyclerViewMoviesFragment extends Fragment {
                     task.execute(searchBy);
                 }
             }
-
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
@@ -228,5 +176,12 @@ public class RecyclerViewMoviesFragment extends Fragment {
                 lastVisibleItem = layout.findLastCompletelyVisibleItemPosition();
             }
         });
+    }
+    private void getMovies(){
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        searchBy = prefs.getString(getString(R.string.pref_searchBy_key),"popular");
+        FetchMovieTask movies = new FetchMovieTask(images,mPictureAdapter,true);
+        LogControl.d(TAG, searchBy);
+        movies.execute(searchBy);
     }
 }

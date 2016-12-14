@@ -51,12 +51,16 @@ public class FetchMovieTask extends AsyncTask<String, Void, List<Movie>> {
         if (movies!=null&&movies.size()!=0){
             if(isPrefsChanged){
                 images.clear();
-                mAdapter.notifyDataSetChanged();
+                if(mAdapter!=null){
+                    mAdapter.notifyDataSetChanged();
+                }
             }
             for(Movie m:movies){
                 if(!images.contains(m)){
                     images.add(m);
-                    mAdapter.notifyItemChanged(images.size()-1);
+                    if(mAdapter!=null){
+                        mAdapter.notifyItemChanged(images.size()-1);
+                    }
                 }
             }
             if(mSwipe!=null){
