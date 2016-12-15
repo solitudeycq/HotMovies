@@ -58,6 +58,7 @@ public class RecyclerViewMoviesFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRetainInstance(true);
         setHasOptionsMenu(true);
         if(!CheckNetWork.isOnline(getActivity())){
             images = WriteAndReadJsonFromSD.ReadMoviesFromFile(getActivity(),images);
