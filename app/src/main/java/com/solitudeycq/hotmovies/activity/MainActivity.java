@@ -21,6 +21,7 @@ public class MainActivity extends FragmentActivity{
 
         if(!CheckNetWork.isOnline(this)){
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setCancelable(false);
             builder.setTitle(getString(R.string.alert_title));
             builder.setIcon(R.drawable.alert_icon);
             builder.setMessage(getString(R.string.alert_message));
