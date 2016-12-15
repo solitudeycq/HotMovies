@@ -31,6 +31,7 @@ public class OkHttpUtil {
         try {
             Response response = client.newCall(request).execute();
             movieJsonStr = response.body().string();
+            LogControl.d(TAG,"movieJsonStr: "+movieJsonStr);
         } catch (IOException e) {
             e.printStackTrace();
         }

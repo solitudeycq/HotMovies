@@ -24,7 +24,6 @@ import com.solitudeycq.hotmovies.bean.Movie;
 import com.solitudeycq.hotmovies.recylerview.OnItemClickLitener;
 import com.solitudeycq.hotmovies.recylerview.PictureAdapter;
 import com.solitudeycq.hotmovies.recylerview.SpaceItemDecoration;
-import com.solitudeycq.hotmovies.utils.CheckNetWork;
 import com.solitudeycq.hotmovies.utils.FetchMovieTask;
 import com.solitudeycq.hotmovies.utils.LogControl;
 import com.solitudeycq.hotmovies.utils.WriteAndReadJsonFromSD;
@@ -60,7 +59,7 @@ public class RecyclerViewMoviesFragment extends Fragment {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
         setHasOptionsMenu(true);
-        if(!CheckNetWork.isOnline(getActivity())){
+        if(true){
             images = WriteAndReadJsonFromSD.ReadMoviesFromFile(getActivity(),images);
             LogControl.d(TAG,images.size());
         }
@@ -111,9 +110,9 @@ public class RecyclerViewMoviesFragment extends Fragment {
         super.onStart();
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getActivity());
         if(!(searchBy.equals(prefs.getString(getString(R.string.pref_searchBy_key),"popular")))){
+            PAGE = 1;
             searchBy = prefs.getString(getString(R.string.pref_searchBy_key),"popular");
             FetchMovieTask movies = new FetchMovieTask(images,mPictureAdapter,true);
-            PAGE = 1;
             LogControl.d(TAG, searchBy);
             movies.execute(searchBy);
         }
@@ -121,6 +120,7 @@ public class RecyclerViewMoviesFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+        PAGE = 1;
         WriteAndReadJsonFromSD.WriteMoviesToFile(getActivity(),images);
     }
     @Override
