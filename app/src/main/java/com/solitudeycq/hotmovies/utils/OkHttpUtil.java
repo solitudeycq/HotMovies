@@ -33,7 +33,8 @@ public class OkHttpUtil {
             movieJsonStr = response.body().string();
             LogControl.d(TAG,"movieJsonStr: "+movieJsonStr);
         } catch (IOException e) {
-            e.printStackTrace();
+            LogControl.e(TAG,"请求出错了");
+            LogControl.e(TAG,"movieJsonStr: "+movieJsonStr);
         }
         return movieJsonStr;
     }
