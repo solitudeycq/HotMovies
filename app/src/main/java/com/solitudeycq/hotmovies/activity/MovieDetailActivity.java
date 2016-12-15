@@ -34,7 +34,12 @@ public class MovieDetailActivity extends Activity {
                 mMovieName.setText(m.getName());
                 mReleaseYear.setText(((m.getReleaseDate()).split("-"))[0]);
                 mMovieRating.setText(m.getRating()+"/10");
-                mMovieOverview.setText(m.getIntroduction());
+                if(m.getIntroduction()!=null&&m.getIntroduction().length()!=0){
+                    mMovieOverview.setText(m.getIntroduction());
+                }else{
+                    Toast.makeText(MovieDetailActivity.this,getString(R.string.toast_no_introduction),Toast.LENGTH_SHORT).show();
+                    mMovieOverview.setText(getString(R.string.default_movie_overview));
+                }
                 loadPic(m);
             }
         }
