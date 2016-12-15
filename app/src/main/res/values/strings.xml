@@ -22,6 +22,7 @@
     <string name="detail_original_title">Original Title</string>
     <string name="detail_default_original_title">English Name</string>
     <string name="detail_vote_count">投票人数</string>
+    <string name="detail_default_vote_count">3000</string>
     <string name="default_movie_overview">电影，是由活动照相术和幻灯放映术结合发展起来的一种连续的视
         频画面，是一门视觉和听觉的现代艺术，也是一门可以容纳悲喜剧与文学戏剧、摄影、绘画、音乐、舞蹈、
         文字、雕塑、建筑等多种艺术的现代科技与艺术的综合体。但它又具有独自的特征，电影在艺术表现力上

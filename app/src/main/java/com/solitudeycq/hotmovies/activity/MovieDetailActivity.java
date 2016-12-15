@@ -19,6 +19,7 @@ public class MovieDetailActivity extends Activity {
     private TextView mMovieRating;
     private TextView mMovieOverview;
     private TextView mMovieOriginalTitle;
+    private TextView mVoteCount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +43,9 @@ public class MovieDetailActivity extends Activity {
                     mMovieOverview.setText(getString(R.string.default_movie_overview));
                 }
                 mMovieOriginalTitle.setText(m.getOriginalTitle());
+                if(m.getVoteCount()!=null&&m.getVoteCount().length()!=0){
+                    mVoteCount.setText(m.getVoteCount());
+                }
                 loadPic(m);
             }
         }
@@ -53,6 +57,7 @@ public class MovieDetailActivity extends Activity {
         mMovieRating = (TextView) findViewById(R.id.rating_txt);
         mMovieOverview = (TextView) findViewById(R.id.movie_overview);
         mMovieOriginalTitle = (TextView) findViewById(R.id.detail_original_title);
+        mVoteCount = (TextView) findViewById(R.id.detail_vote_count);
     }
     private void loadPic(Movie m){
         Picasso.with(this)

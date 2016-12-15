@@ -14,6 +14,15 @@ public class Movie implements Serializable {
     private String rating;
     private String releaseDate;
     private String originalTitle;
+    private String voteCount;
+
+    public String getVoteCount() {
+        return voteCount;
+    }
+
+    public void setVoteCount(String voteCount) {
+        this.voteCount = voteCount;
+    }
 
     public String getOriginalTitle() {
         return originalTitle;

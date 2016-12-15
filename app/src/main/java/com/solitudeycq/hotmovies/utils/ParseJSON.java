@@ -35,6 +35,7 @@ public class ParseJSON {
                     m.setRating(j.getString("vote_average"));
                     m.setReleaseDate(j.getString("release_date"));
                     m.setOriginalTitle(j.getString("original_title"));
+                    m.setVoteCount(j.getString("vote_count"));
                     movies.add(m);
                 }
                 LogControl.d(TAG,"从网络解析电影成功");

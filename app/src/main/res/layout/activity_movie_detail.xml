@@ -145,7 +145,7 @@
                                 android:id="@+id/detail_vote_count"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="100"/>
+                                android:text="@string/detail_default_vote_count"/>
                         </LinearLayout>
                     </LinearLayout>
                 </android.support.v7.widget.CardView>
