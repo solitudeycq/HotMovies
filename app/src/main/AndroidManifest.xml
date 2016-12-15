@@ -16,7 +16,7 @@
         <activity
             android:name=".activity.MainActivity"
             android:theme="@style/AppTheme.Launcher"
-            android:screenOrientation="portrait">
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -35,7 +35,7 @@
             android:name=".activity.MovieDetailActivity"
             android:label="@string/title_activity_movie_detail"
             android:parentActivityName=".activity.MainActivity"
-            android:screenOrientation="portrait">
+            >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.solitudeycq.hotmovies.activity.MainActivity"/>

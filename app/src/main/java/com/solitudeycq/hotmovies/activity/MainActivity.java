@@ -43,6 +43,12 @@ public class MainActivity extends FragmentActivity{
             });
             AlertDialog alert = builder.create();
             alert.show();
+        }else{
+            if (savedInstanceState == null) {
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.container, new RecyclerViewMoviesFragment())
+                        .commit();
+            }
         }
     }
 }

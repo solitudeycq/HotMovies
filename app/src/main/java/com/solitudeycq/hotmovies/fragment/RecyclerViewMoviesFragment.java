@@ -149,6 +149,8 @@ public class RecyclerViewMoviesFragment extends Fragment {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
+                LogControl.d(TAG,"lastVisibileItem = "+(lastVisibleItem+1));
+                LogControl.d(TAG,"PAGE = "+PAGE);
                 if(newState==RecyclerView.SCROLL_STATE_IDLE&&(lastVisibleItem+1)==PAGE*20){
                     FetchMovieTask task = new FetchMovieTask(images,mPictureAdapter,++PAGE);
                     task.execute(searchBy);
