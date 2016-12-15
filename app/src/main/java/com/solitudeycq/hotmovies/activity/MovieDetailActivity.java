@@ -18,6 +18,7 @@ public class MovieDetailActivity extends Activity {
     private TextView mReleaseYear;
     private TextView mMovieRating;
     private TextView mMovieOverview;
+    private TextView mMovieOriginalTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,7 @@ public class MovieDetailActivity extends Activity {
                     Toast.makeText(MovieDetailActivity.this,getString(R.string.toast_no_introduction),Toast.LENGTH_SHORT).show();
                     mMovieOverview.setText(getString(R.string.default_movie_overview));
                 }
+                mMovieOriginalTitle.setText(m.getOriginalTitle());
                 loadPic(m);
             }
         }
@@ -50,6 +52,7 @@ public class MovieDetailActivity extends Activity {
         mReleaseYear = (TextView) findViewById(R.id.releaseyear_txt);
         mMovieRating = (TextView) findViewById(R.id.rating_txt);
         mMovieOverview = (TextView) findViewById(R.id.movie_overview);
+        mMovieOriginalTitle = (TextView) findViewById(R.id.detail_original_title);
     }
     private void loadPic(Movie m){
         Picasso.with(this)

@@ -13,6 +13,15 @@ public class Movie implements Serializable {
     private String name;
     private String rating;
     private String releaseDate;
+    private String originalTitle;
+
+    public String getOriginalTitle() {
+        return originalTitle;
+    }
+
+    public void setOriginalTitle(String originalTitle) {
+        this.originalTitle = originalTitle;
+    }
 
     public String getId() {
         return id;
