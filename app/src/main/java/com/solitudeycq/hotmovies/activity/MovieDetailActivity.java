@@ -60,7 +60,7 @@ public class MovieDetailActivity extends Activity {
                     public void onSuccess() {}
                     @Override
                     public void onError() {
-                        Toast.makeText(MovieDetailActivity.this,"图片加载失败，使用默认图片代替",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MovieDetailActivity.this,getString(R.string.picasso_error_loadingPic),Toast.LENGTH_SHORT).show();
                     }
                 });
     }

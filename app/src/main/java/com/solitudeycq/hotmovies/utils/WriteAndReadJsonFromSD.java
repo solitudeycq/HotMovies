@@ -3,6 +3,7 @@ package com.solitudeycq.hotmovies.utils;
 import android.content.Context;
 
 import com.google.gson.Gson;
+import com.solitudeycq.hotmovies.R;
 import com.solitudeycq.hotmovies.bean.Movie;
 
 import java.io.BufferedReader;
@@ -30,9 +31,9 @@ public class WriteAndReadJsonFromSD {
                 writer = new FileWriter(file);
                 bufferedWriter = new BufferedWriter(writer);
                 bufferedWriter.write(json);
-                LogControl.d(TAG,"存储完成");
+                LogControl.d(TAG,context.getString(R.string.store_success));
             } catch (IOException e) {
-                LogControl.d(TAG,"存储出错");
+                LogControl.d(TAG,context.getString(R.string.store_failed));
                 e.printStackTrace();
             }finally{
                 if(bufferedWriter!=null){
