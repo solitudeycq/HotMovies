@@ -3,6 +3,7 @@ package com.solitudeycq.hotmovies.utils;
 import android.os.AsyncTask;
 import android.support.v4.widget.SwipeRefreshLayout;
 
+import com.solitudeycq.hotmovies.IMainActivityInterface;
 import com.solitudeycq.hotmovies.bean.Movie;
 import com.solitudeycq.hotmovies.recylerview.PictureAdapter;
 
@@ -19,6 +20,7 @@ public class FetchMovieTask extends AsyncTask<String, Void, List<Movie>> {
     private SwipeRefreshLayout mSwipe;
     private int page = 1;
     private boolean isPrefsChanged = false;
+    private IMainActivityInterface mIMainActivityInterface;
 
     public FetchMovieTask(List<Movie> images,PictureAdapter mAdapter){
         this.images = images;
@@ -40,6 +42,12 @@ public class FetchMovieTask extends AsyncTask<String, Void, List<Movie>> {
         this.images = images;
         this.mAdapter = mAdapter;
         this.page = page;
+    }
+    public FetchMovieTask(List<Movie> images, PictureAdapter mAdapter, int page,IMainActivityInterface mIMainActivityInterface){
+        this.images = images;
+        this.mAdapter = mAdapter;
+        this.page = page;
+        this.mIMainActivityInterface = mIMainActivityInterface;
     }
     @Override
     protected List<Movie> doInBackground(String... strings) {
@@ -66,6 +74,13 @@ public class FetchMovieTask extends AsyncTask<String, Void, List<Movie>> {
             }
             if(mSwipe!=null){
                 mSwipe.setRefreshing(false);
+            }
+            if ((mIMainActivityInterface!=null)){
+                mIMainActivityInterface.onFetchMoviesSuccess();
+            }
+        }else{
+            if(mIMainActivityInterface!=null){
+                mIMainActivityInterface.onFetchMoviesFailed();
             }
         }
     }

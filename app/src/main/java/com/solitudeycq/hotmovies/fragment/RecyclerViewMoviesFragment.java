@@ -16,7 +16,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.solitudeycq.hotmovies.IMainActivityInterface;
 import com.solitudeycq.hotmovies.R;
 import com.solitudeycq.hotmovies.activity.MovieDetailActivity;
 import com.solitudeycq.hotmovies.activity.SettingsActivity;
@@ -37,7 +39,7 @@ import jp.wasabeef.recyclerview.animators.ScaleInAnimator;
  * Created by solitudeycq on 2016/12/9.
  */
 
-public class RecyclerViewMoviesFragment extends Fragment {
+public class RecyclerViewMoviesFragment extends Fragment implements IMainActivityInterface{
     private static final String TAG = "RecyclerViewFragment";
     private static int PAGE = 1;
 
@@ -152,7 +154,7 @@ public class RecyclerViewMoviesFragment extends Fragment {
                 LogControl.d(TAG,"lastVisibileItem = "+(lastVisibleItem+1));
                 LogControl.d(TAG,"PAGE = "+PAGE);
                 if(newState==RecyclerView.SCROLL_STATE_IDLE&&(lastVisibleItem+1)==PAGE*20){
-                    FetchMovieTask task = new FetchMovieTask(images,mPictureAdapter,++PAGE);
+                    FetchMovieTask task = new FetchMovieTask(images,mPictureAdapter,++PAGE,RecyclerViewMoviesFragment.this);
                     task.execute(searchBy);
                 }
             }
@@ -170,5 +172,18 @@ public class RecyclerViewMoviesFragment extends Fragment {
         FetchMovieTask movies = new FetchMovieTask(images,mPictureAdapter,true);
         LogControl.d(TAG, searchBy);
         movies.execute(searchBy);
+    }
+
+    @Override
+    public void onFetchMoviesSuccess() {
+        LogControl.d(TAG,"获取数据成功，当前page = "+PAGE);
+    }
+
+    @Override
+    public void onFetchMoviesFailed() {
+        Toast.makeText(getActivity(),"刷新失败，请稍后重试！",Toast.LENGTH_SHORT).show();
+        if (PAGE!=1){
+            --PAGE;
+        }
     }
 }
