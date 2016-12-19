@@ -21,11 +21,12 @@
                 android:layout_below="@id/movie_pic"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
                 <RatingBar
                     android:id="@+id/ratingbar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
                     android:rating="4.5"
                     android:numStars="5"
                     android:isIndicator="true"
@@ -36,13 +37,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="4.5"
-                    android:layout_marginLeft="15dp"/>
+                    android:layout_gravity="center_horizontal"/>
             </LinearLayout>
             <TextView
                 android:id="@+id/movie_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/linearlayout"
+                android:gravity="center"
                 android:text="影片名字"
                 android:layout_centerHorizontal="true"/>
         </RelativeLayout>
