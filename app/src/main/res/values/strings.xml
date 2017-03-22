@@ -2,7 +2,7 @@
     <string name="app_name">HotMovies</string>
     <string name="action_refresh">刷新</string>
     <string name="action_settings">设置</string>
-    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_settings">设置</string>
     <string name="pref_serachBy_label">电影排序</string>
     <string name="pref_searchBy_label_popular">热门</string>
     <string name="pref_searchBy_label_toprated">高分</string>
