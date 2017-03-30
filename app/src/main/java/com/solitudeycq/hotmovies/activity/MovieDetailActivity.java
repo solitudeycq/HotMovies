@@ -3,6 +3,7 @@ package com.solitudeycq.hotmovies.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Window;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -58,6 +59,7 @@ public class MovieDetailActivity extends Activity {
         mReleaseYear = (TextView) findViewById(R.id.releaseyear_txt);
         mMovieRating = (TextView) findViewById(R.id.rating_txt);
         mMovieOverview = (TextView) findViewById(R.id.movie_overview);
+        mMovieOverview.setMovementMethod(ScrollingMovementMethod.getInstance());
         mMovieOriginalTitle = (TextView) findViewById(R.id.detail_original_title);
         mVoteCount = (TextView) findViewById(R.id.detail_vote_count);
     }
